@@ -1,0 +1,220 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a href="/research/index/pid/<?=$this->pid?>" class="list-group-item">
+          <h4 class="list-group-item-heading"><?=$this->projectName->name?></h4>
+          <p class="list-group-item-text">Gerencie aqui os dados da pesquisa</p>
+        </a>
+        <a href="/research/new/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-pencil"></i> Novo</a>
+        <a href="/research/view/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-search"></i> Pesquisar</a>
+        <a href="#" class="list-group-item active"> Possíveis erros</a>
+        <a href="/research/report/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-list-alt"></i> Relatórios</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <ol class="breadcrumb">
+        <li><a href="/dashboard">Página inicial</a></li>
+        <li><a href="/research/index/pid/<?=$this->pid?>"><?=$this->projectName->name?></a></li>
+        <li><a href="/research/report/pid/<?=$this->pid?>">Relatórios</a></li>
+        <li class="active">Relatório de possíveis erros</li>
+      </ol>  
+      <div class="page-header">
+        <h1>Relatório de possíveis erros <small> Gerencie aqui os dados</small></h1>
+        <hr>
+        <div class="col-sm-13">
+            <?
+            if(is_object($this->list) && !isset($this->list->card_cod)){
+              $x=0;
+              $y=0;
+              foreach($this->list as $body){
+                $dt = explode(" ",$body->date_time);
+                $date_time = $dt[0];
+
+                if($x==0){
+                  $cod_before = $body->card_cod;?>
+                  <table class="table table-hover table-bordered">
+                  <thead>
+                    <th>Cod. do cartão</th>
+                    <th>Linha</th>
+                    <th>Emb./Desemb.</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tempo viagem</th>
+                    <th>Ações</th>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><?=$body->card_cod?></td>
+                    <td><?=$body->selected_line?></td>
+                    <td><?=$body->e_d?></td>
+                    <td><?=Application_Model_General::dateToBr($date_time)?></td>
+                    <td><?=$body->hour?></td>
+                    <?if($y % 2 == 0){
+                      $hour_before = $body->hour;
+                      echo "<td>-</td>";
+                    }
+                    else{
+                      $time = Application_Model_General::convertToMinute($body->hour) - Application_Model_General::convertToMinute($hour_before);
+                      echo"<td>".$time."min</td>";
+                    }?>
+                    <td>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Desativar registro" data-target="#desativate_<?=$body->id?>"><i class="fa fa-ban"></i></a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Falta Par" data-target="#fp_<?=$body->id?>">FP</a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Aceitar registro" data-target="#accept_<?=$body->id?>"><i class="fa fa-thumbs-up"></i></a>
+                    </td>
+                  </tr>
+              <?}
+                else{
+                  if($cod_before == $body->card_cod){?>
+                    <tr>
+                    <td><?=$body->card_cod?></td>
+                    <td><?=$body->selected_line?></td>
+                    <td><?=$body->e_d?></td>
+                    <td><?=Application_Model_General::dateToBr($date_time)?></td>
+                    <td><?=$body->hour?></td>
+                    <?if($y % 2 == 0){
+                      $hour_before = $body->hour;
+                      echo "<td>-</td>";
+                    }
+                    else{
+                      $time = Application_Model_General::convertToMinute($body->hour) - Application_Model_General::convertToMinute($hour_before);
+                      echo"<td>".$time."min</td>";
+                    }?>
+                    <td>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Desativar registro" data-target="#desativate_<?=$body->id?>"><i class="fa fa-ban"></i></a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Falta Par" data-target="#fp_<?=$body->id?>">FP</a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Aceitar registro" data-target="#accept_<?=$body->id?>"><i class="fa fa-thumbs-up"></i></a>
+                    </td>
+                    </tr>
+                <?}
+                  else{
+                    $y=0;?>
+                    </tbody>
+                    </table>
+                    <br>
+                    <table class="table table-hover table-bordered">
+                    <thead>
+                      <th>Cod. do cartão</th>
+                      <th>Linha</th>
+                      <th>Emb./Desemb.</th>
+                      <th>Data</th>
+                      <th>Hora</th>
+                      <th>Tempo viagem</th>
+                      <th>Ações</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                    <td><?=$body->card_cod?></td>
+                    <td><?=$body->selected_line?></td>
+                    <td><?=$body->e_d?></td>
+                    <td><?=Application_Model_General::dateToBr($date_time)?></td>
+                    <td><?=$body->hour?></td>
+                    <?if($y % 2 == 0){
+                      $hour_before = $body->hour;
+                      echo "<td>-</td>";
+                    }
+                    else{
+                      $time = Application_Model_General::convertToMinute($body->hour) - Application_Model_General::convertToMinute($hour_before);
+                      echo"<td>".$time."min</td>";
+                    }?>
+                    <td>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Desativar registro" data-target="#desativate_<?=$body->id?>"><i class="fa fa-ban"></i></a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Falta Par" data-target="#fp_<?=$body->id?>">FP</a>
+                    <a class="btn btn-default btn-sm help" data-toggle="modal" title="Aceitar registro" data-target="#accept_<?=$body->id?>"><i class="fa fa-thumbs-up"></i></a>
+                    </td>
+                    </tr>
+                <?}
+                }
+                $cod_before = $body->card_cod;
+                $x++;
+                $y++;
+              }
+            } else{?>
+              <tr>
+                <td colspan="7">Não foi encontrada nenhum dado para gerar o relatório.</td>
+              </tr>
+            <?}?>
+          </tbody>
+        </table>
+        </div>
+      </div>
+     </div>
+    </div>
+  </div>
+
+
+
+<?if(count($this->list)){
+foreach($this->list as $body){?>
+  <form method="post" class="form-horizontal" action="/research/desativate/pid/<?=$this->pid?>" enctype="multipart/form-data">
+  <div class="modal fade" id="desativate_<?=$body->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Desativação de registro</h4>
+        </div>
+        <div class="modal-body">
+             <p>Tem certeza que deseja desativar este registro? Desta forma ele não aparecerá mais neste relatório.</p>
+        </div>  
+        <div class="modal-footer">
+            <input type="hidden" value="<?=$body->id?>" name="id">
+            <input type="hidden" value="<?=$body->card_cod?>" name="card_cod">
+            <input type="hidden" value="2" name="status">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-danger">Desativar</button>
+        </div>
+      </div> 
+    </div>
+  </div>       
+  </form>
+
+  <form method="post" class="form-horizontal" action="/research/pair-lack/pid/<?=$this->pid?>" enctype="multipart/form-data">
+  <div class="modal fade" id="fp_<?=$body->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Falta par do registro</h4>
+        </div>
+        <div class="modal-body">
+             <p>Tem certeza que deseja marcar este registro com Falta Par? Desta forma ele não aparecerá mais neste relatório.</p>
+        </div>  
+        <div class="modal-footer">
+            <input type="hidden" value="<?=$body->id?>" name="id">
+            <input type="hidden" value="<?=$body->card_cod?>" name="card_cod">
+            <input type="hidden" value="3" name="status">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-danger">Gravar</button>
+        </div>
+      </div> 
+    </div>
+  </div>       
+  </form>
+
+  <form method="post" class="form-horizontal" action="/research/accept/pid/<?=$this->pid?>" enctype="multipart/form-data">
+  <div class="modal fade" id="accept_<?=$body->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Aceitar erro do registro</h4>
+        </div>
+        <div class="modal-body">
+             <p>Tem certeza que deseja aceitar o erro deste registro? Desta forma ele não aparecerá mais neste relatório.</p>
+        </div>  
+        <div class="modal-footer">
+            <input type="hidden" value="<?=$body->id?>" name="id">
+            <input type="hidden" value="<?=$body->card_cod?>" name="card_cod">
+            <input type="hidden" value="4" name="status">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-danger">Aceitar</button>
+        </div>
+      </div> 
+    </div>
+  </div>       
+  </form>
+
+<?}
+}?>

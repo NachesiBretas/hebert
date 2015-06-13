@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a href="/research/manager/pid/<?=$this->pid?>" class="list-group-item">
+          <h4 class="list-group-item-heading"><?=$this->projectName->name?></h4>
+          <p class="list-group-item-text">Gerencie aqui os dados da pesquisa</p>
+        </a>
+        <a href="/research/new/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-pencil"></i> Novo</a>
+        <a href="/research/view/pid/<?=$this->pid?>" class="list-group-item active"><i class="fa fa-search"></i> Pesquisar</a>
+        <a href="/research/report/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-list-alt"></i> Relatórios</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <ol class="breadcrumb">
+        <li><a href="/dashboard">Página inicial</a></li>
+        <li><a href="/research/index/pid/<?=$this->pid?>"><?=$this->projectName->name?></a></li>
+        <li class="active">Pesquisa</li>
+      </ol>  
+      <div class="page-header">
+        <h1>Pesquisa <small> Gerencie aqui os dados da pesquisa</small></h1>
+        <div class="col-sm-13">
+         <hr>
+          <form class="form-inline" action="/research/view/pid/<?=$this->pid?>" method="get" role="form">
+            <div class="form-group col-md-5">
+              <input type="text" class="form-control" placeholder="pesquisa" name="field" value="<?=$this->field?>" id="textSearchFleet">
+            </div>
+            <div class="form-group col-md-3">
+              <select name="option" class="form-control" id="searchFleet">
+                <option value="0">Pesquisar por:</option>
+                <option value="1" <?if($this->option == 1) echo 'selected="selected"';?>>Linha</option>
+                <option value="2" <?if($this->option == 2) echo 'selected="selected"';?>>Porta</option>
+                <option value="3" <?if($this->option == 3) echo 'selected="selected"';?>>Origem</option>
+                <option value="4" <?if($this->option == 4) echo 'selected="selected"';?>>Código Cartão</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+          </form>
+          <hr>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <th>Linha</th>
+            <th>Porta</th>
+            <th>Origem</th>
+            <th>Código Cartão</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+          </thead>
+          <tbody>
+            <?
+            $validator = new Application_Model_DbTable_GpsData();
+            if(is_object($this->list) && !isset($this->list->utm)){
+              foreach($this->list as $body){?>
+                <tr>
+                  <td><?=$body->selected_line?></td>
+                  <td><?=$body->e_d?></td>
+                  <td><?=$body->selected_start?></td>
+                  <td><?=$body->card_cod?></td>
+                  <td><?=$body->lat?></td>
+                  <td><?=$body->long?></td>
+                </tr>
+            <?}} else{?>
+              <tr>
+                <td colspan="7">Não foi encontrada nenhum dado importado para esta pesquisa.</td>
+              </tr>
+            <?}?>
+          </tbody>
+        </table>
+        <?if(is_object($this->list) && !isset($this->list->utm)){ echo $this->paginationControl($this->list,'Sliding','pagination.phtml'); }?>
+        </div>
+      </div>
+     </div>
+    </div>
+  </div>

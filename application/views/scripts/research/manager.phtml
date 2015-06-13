@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a href="/research/manager/pid/<?=$this->pid?>" class="list-group-item">
+          <h4 class="list-group-item-heading"><?=$this->projectName->name?></h4>
+          <p class="list-group-item-text">Gerencie aqui os dados da pesquisa</p>
+        </a>
+        <a href="/research/new/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-pencil"></i> Novo</a>
+        <a href="/research/view/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-search"></i> Pesquisar</a>
+        <a href="/research/report/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-list-alt"></i> Relatórios</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+     <ol class="breadcrumb">
+        <li><a href="/dashboard">Página inicial</a></li>
+        <li><a href="/research/index/pid/<?=$this->pid?>"><?=$this->projectName->name?></a></li>
+        <li class="active">Gerenciar</li>
+      </ol>   
+      <div class="jumbotron">
+        <h1><?=$this->projectName->name?></h1>
+        <p class="lead">Neste módulo você poderá importar os dados da pesquisa, pesquisar as informações importadas e gerenciar os relatórios.</p>
+      </div>
+     </div>
+    </div>
+  </div>

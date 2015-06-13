@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group">
+        <a href="/research/manager/pid/<?=$this->pid?>" class="list-group-item">
+          <h4 class="list-group-item-heading"><?=$this->projectName->name?></h4>
+          <p class="list-group-item-text">Gerencie aqui os dados da pesquisa</p>
+        </a>
+        <a href="/research/new/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-pencil"></i> Novo</a>
+        <a href="/research/view/pid/<?=$this->pid?>" class="list-group-item"><i class="fa fa-search"></i> Pesquisar</a>
+        <a href="/research/report/pid/<?=$this->pid?>" class="list-group-item active"><i class="fa fa-list-alt"></i> Relatórios</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <ol class="breadcrumb">
+        <li><a href="/dashboard">Página inicial</a></li>
+        <li><a href="/research/index/pid/<?=$this->pid?>"><?=$this->projectName->name?></a></li>
+        <li class="active">Relatórios</li>
+      </ol> 
+      <div class="page-header">
+        <h1>Relatórios <small> Selecione aqui o relatório para visualiza-lo</small></h1>
+        <hr>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#cell_revenue"> Relatório de erros</a>
+              <div id="cell_revenue" class="panel-collapse collapse">
+                <h5 style= "color:grey">Relatório para identificar os possíveis erros no arquivo de dados da pesquisa e realizar os devidos tratamentos para recupera-los quando for possível.</h5>
+                <br>
+                  <form class="form-inline" action="/research/error-report/pid/<?=$this->pid?>" method="post" role="form">
+                    <button type="submit" id='error_report' name='report' class="btn btn-primary" value="0">Gerar relatório</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
